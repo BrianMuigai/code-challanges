@@ -18,13 +18,4 @@ public class Graph {
             this.neighbours = neighbours;
         }
     }
-    
-    public static Node[] breathFirstSearch(Node[] nodes, Node start) {
-        //queue
-
-    }
-
-    public static Node[] depthFirstSearch(Node[] nodes, Node start) {
-        //stacks
-    }
 }
