@@ -56,7 +56,7 @@ public class Solution {
 
     private static boolean isDivisible(String x) {
         int last = Integer.parseInt(x.substring(x.length() - 1));
-        if (last < 2 && x.length() > 1)
+        if (last < 2)
             last = Integer.parseInt(x.substring(x.length() - 2));
         return last % 2 == 0;
     }
@@ -81,9 +81,6 @@ public class Solution {
                 sb.setCharAt(i, tmp.charAt(1));
             }
         }
-        if (remainder != 0) {
-            sb.setCharAt(0, (char) (remainder + '0'));
-        }
 
         return sb.toString();
     }
@@ -92,43 +89,35 @@ public class Solution {
         int remainder = 0;
         StringBuilder newX = new StringBuilder();
 
-        int i = 0;
-        while (i < x.length()) {
-            int endIndex = i + 9;
+        for (int i = 0; i < x.length(); i += 8) {
+            int endIndex = i + 8;
             if (endIndex >= x.length()) {
                 endIndex = x.length();
             }
-
             StringBuilder sb = new StringBuilder(x.substring(i, endIndex));
             if (remainder != 0) {
                 int firstVal = (remainder * 10) + Integer.parseInt(String.valueOf(sb.charAt(0)));
                 if (firstVal >= 10) {
-                    remainder = firstVal % 2;
-                    newX.append(firstVal / 2);
-                    i++;
-                    continue;
+                    // todo
                 } else {
                     sb.setCharAt(0, (char) (firstVal + '0'));
                 }
             }
-            if (Integer.parseInt(String.valueOf(sb.charAt(0))) < 2 && i != 0 && i != x.length() - 1)
+            System.out.println("newX: " + newX);
+            if (Integer.parseInt(String.valueOf(sb.charAt(0))) < 2 && i != 0)
                 newX.append("0");
             int num = Integer.parseInt(sb.toString().trim());
             remainder = num % 2;
             newX.append("" + num / 2);
-
-            i += 9;
         }
-
         return newX.toString();
     }
 
     public static void main(String[] args) {
-        System.out.println("\n"+Solution.solution("4"));
-        System.out.println("\n"+Solution.solution("15"));
-        System.out.println("\n" + Solution.solution("12345"));
+        // System.out.println("\n"+Solution.solution("4"));
+        // System.out.println("\n"+Solution.solution("15"));
+        // System.out.println("\n" + Solution.solution("12345"));
         System.out.println("\n" + Solution.solution("123456789098"));
-        System.out.println("\n" + Solution.solution("12345678909898765678987659876543456789876543"));
     }
 
 }
