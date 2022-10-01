@@ -1,64 +1,107 @@
 package distraction;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
 public class Solution {
-    private static Set<String> infiniteSet = new HashSet<>();
 
     public static int solution(int[] list) {
-        int watchers = 0;
-        Set<String> engagedWatchers = new HashSet<>();
-        for (int i = 0; i < list.length; i++) {
-            for (int j = 0; j < list.length; j++) {
-                String pair = i + "," + j;
-                if (i != j && !engagedWatchers.contains(pair)) {
-                    int num1 = list[i];
-                    int num2 = list[j];
-
-                    if (isInfinite(new int[] { num1, num2 }, new HashSet<>())) {
-                        engagedWatchers.add(pair);
-                        break;
-                    }
-                }
-
-                if (j == list.length - 1) {
-                    watchers++;
-                }
-
-            }
-        }
-        return watchers;
+        int maxMatching = maxBPM(createMatrix(list));
+        // System.out.println("Max:> " + maxMatching);
+        return list.length - maxMatching;
     }
 
-    private static boolean isInfinite(int[] pair, Set<String> pairs) {
-        int num1 = pair[0], num2 = pair[1];
-        if (num1 == num2)
-            return false;
-
-        String pairString = num1 + "," + num2;
-        if (pairs.contains(pairString)) {
-            infiniteSet.add(pairString);
-            return true;
-        } else if (infiniteSet.contains(pairString)) {
-            return true;
+    static boolean[][] createMatrix(int[] list) {
+        boolean[][] matrix = new boolean[list.length][list.length];
+        for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < list.length; j++) {
+                matrix[i][j] = isInfinite(list[i], list[j]);
+            }
         }
+        return matrix;
+    }
 
-        pairs.add(pairString);
+    static int gcd(int a, int b) {
+        if (b == 0)
+            return a;
+        return gcd(b, a % b);
+    }
 
-        int stake = num1 < num2 ? num1 * 2 : num2 * 2;
-        if (num1 < num2) {
-            num2 -= num1;
-            num1 = stake;
-        } else {
-            num1 -= num2;
-            num2 = stake;
+    static boolean isInfinite(int a, int b) {
+        int sum = Math.floorDiv(a + b, gcd(a, b));
+        return !((sum & (sum - 1)) == 0);
+    }
+
+    // Returns maximum number
+    // of matching from M to N
+    static int maxBPM(boolean bpGraph[][]) {
+        int N = bpGraph.length;
+        int M = N;
+        // An array to keep track of the
+        // wrestler assigned to each other.
+        // The value of matchR[i] is the
+        // wrestler number assigned to wrestler i,
+        // the value -1 indicates nobody is assigned.
+        int matchR[] = new int[N];
+
+        // Initially all wrestlers are available
+        for (int i = 0; i < N; ++i)
+            matchR[i] = -1;
+
+        // Count of wrestlers assigned to each other
+        int result = 0;
+        for (int u = 0; u < M; u++) {
+            // Mark all wrestlers as not seen
+            // for next wrestler.
+            boolean seen[] = new boolean[N];
+            for (int i = 0; i < N; ++i)
+                seen[i] = false;
+
+            // Find if the wrestler 'u' can get a match
+            if (bpm(bpGraph, u, seen, matchR))
+                result++;
         }
-        return isInfinite(new int[] { num1, num2 }, pairs);
+        return result;
+    }
+
+    static boolean bpm(boolean bpGraph[][], int u,
+            boolean seen[], int matchR[]) {
+        int N = bpGraph.length;
+        // Try every wrestler one by one
+        for (int v = 0; v < N; v++) {
+            // If wrestler u is can be matched with
+            // wrestler v and v is not visited
+            if (bpGraph[u][v] && !seen[v]) {
+
+                // Mark v as visited
+                seen[v] = true;
+
+                // If wrestler 'v' is not assigned to
+                // an opponent OR previously
+                // assigned opponent for wrestler v (which
+                // is matchR[v]) has an alternate wrestler available.
+                // Since v is marked as visited in the
+                // above line, matchR[v] in the following
+                // recursive call will not get wrestler 'v' again
+                if (matchR[v] < 0 || bpm(bpGraph, matchR[v],
+                        seen, matchR)) {
+                    matchR[v] = u;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
-        System.out.println("\n" + Solution.solution(new int[] { 1, 7, 3, 21, 13, 19 }));
-        System.out.println("\n" + Solution.solution(new int[] { 1, 1, 1, 2 })); // return 2
+        // System.out.println("\n" + Solution.solution(new int[] { 1, 7, 3, 21, 13, 19
+        // }));
+        /*
+         * false, true,
+         */
+        System.out.println("\n" + Solution.solution(new int[] { 1, 2, 200000 }));
+        // System.out.println("\n" + Solution.solution(new int[] { 1, 1, 1, 2 }));
+        for (boolean[] row : Solution.createMatrix(new int[] { 1, 2, 200000 })) {
+            System.out.println(Arrays.toString(row));
+        }
     }
 }
