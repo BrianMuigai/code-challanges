@@ -53,27 +53,32 @@ public class Solution {
             // Mark all wrestlers as not seen
             // for next wrestler.
             boolean seen[] = new boolean[N];
-            for (int i = 0; i < N; ++i)
+            boolean seenLeft[] = new boolean[N];
+            for (int i = 0; i < N; ++i) {
                 seen[i] = false;
+                seenLeft[i] = false;
+            }
 
             // Find if the wrestler 'u' can get a match
-            if (bpm(bpGraph, u, seen, matchR))
+            if (bpm(bpGraph, u, seen, seenLeft, matchR))
                 result++;
         }
         return result;
     }
 
     static boolean bpm(boolean bpGraph[][], int u,
-            boolean seen[], int matchR[]) {
+            boolean seen[], boolean seenLeft[], int matchR[]) {
         int N = bpGraph.length;
         // Try every wrestler one by one
         for (int v = 0; v < N; v++) {
             // If wrestler u is can be matched with
             // wrestler v and v is not visited
-            if (bpGraph[u][v] && !seen[v]) {
+            if (bpGraph[u][v] && !seen[v] && !seenLeft[u]) {
 
                 // Mark v as visited
                 seen[v] = true;
+                if (N % 2 != 0)
+                    seen[u] = true;
 
                 // If wrestler 'v' is not assigned to
                 // an opponent OR previously
@@ -83,7 +88,7 @@ public class Solution {
                 // above line, matchR[v] in the following
                 // recursive call will not get wrestler 'v' again
                 if (matchR[v] < 0 || bpm(bpGraph, matchR[v],
-                        seen, matchR)) {
+                        seen, seenLeft, matchR)) {
                     matchR[v] = u;
                     return true;
                 }
@@ -93,15 +98,10 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        // System.out.println("\n" + Solution.solution(new int[] { 1, 7, 3, 21, 13, 19
-        // }));
-        /*
-         * false, true,
-         */
-        System.out.println("\n" + Solution.solution(new int[] { 1, 2, 200000 }));
-        // System.out.println("\n" + Solution.solution(new int[] { 1, 1, 1, 2 }));
-        for (boolean[] row : Solution.createMatrix(new int[] { 1, 2, 200000 })) {
-            System.out.println(Arrays.toString(row));
-        }
+        System.out.println(Solution.solution(new int[] { 1, 1 }));
+        System.out.println("\n" + Solution.solution(new int[] { 1, 7, 3, 21, 13, 19
+        }));
+        System.out.println(Solution.solution(new int[] { 1, 2, 200000 }));
+        System.out.println("\n" + Solution.solution(new int[] { 1, 1, 1, 2 }));
     }
 }
