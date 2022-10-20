@@ -112,8 +112,8 @@ public class Solution {
                     if (path[i][j] > 0) {
                         int available = path[i][j];
                         int current = available;
-                        if (j > 0 && corridorTraffic[j - 1] > 0) {
-                            current = corridorTraffic[j - 1];
+                        if (j > 0 && corridorTraffic[i] > 0) {
+                            current = corridorTraffic[i];
                         }
                         if (available > current) {
                             available = current;
@@ -132,7 +132,7 @@ public class Solution {
                         } else {
                             sent = available;
                         }
-                        corridorTraffic[j] = sent;
+                        corridorTraffic[j] = corridorTraffic[j] + sent;
                         if (isExit(exits, j)) {
                             counter += sent;
                         }
