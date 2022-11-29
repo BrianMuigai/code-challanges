@@ -1,0 +1,105 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution",
+            "request": "launch",
+            "mainClass": "NathansTest.Solution",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution(1)",
+            "request": "launch",
+            "mainClass": "accessCodes.Solution",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch CoddedMessage",
+            "request": "launch",
+            "mainClass": "coddedMessage.CoddedMessage",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution(2)",
+            "request": "launch",
+            "mainClass": "distraction.Solution",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution(3)",
+            "request": "launch",
+            "mainClass": "dodgeLasers.Solution",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution(4)",
+            "request": "launch",
+            "mainClass": "escapePods.Solution",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution(5)",
+            "request": "launch",
+            "mainClass": "expandingNebula.Solution",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch PyJav",
+            "request": "launch",
+            "mainClass": "fuelInjection.PyJav",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution(6)",
+            "request": "launch",
+            "mainClass": "fuelInjection.Solution",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch SolutionTree",
+            "request": "launch",
+            "mainClass": "fuelInjection.SolutionTree",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution(7)",
+            "request": "launch",
+            "mainClass": "gears.Solution",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch ShortestPath",
+            "request": "launch",
+            "mainClass": "graph.ShortestPath",
+            "projectName": "java_b17b6ba9"
+        },
+        {
+            "type": "java",
+            "name": "Launch Test",
+            "request": "launch",
+            "mainClass": "turing.Test",
+            "projectName": "java_b17b6ba9"
+        }
+    ]
+}
